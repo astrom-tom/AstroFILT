@@ -1,0 +1,83 @@
+#!/usr/bin/python
+'''
+#####################################
+#####                           #####
+#####                           #####
+#####       ASTROFILT           #####
+#####                           #####
+#####       R.THOMAS~           #####
+#####                           #####
+#####################################
+
+
+This quick script reads the hdf5 filter library 
+and interact with the user It asks the user a system 
+of filter and plot the selected one
+
+@author: R. THOMAS
+@year: 2017-2018
+@place: UV-ESO
+'''
+
+####Python libraries
+import warnings
+warnings.simplefilter(action='ignore', category=FutureWarning)
+import h5py,random
+import os
+import matplotlib
+import matplotlib.pyplot as plt
+from matplotlib import rc
+
+
+### The Scripts ##################
+
+################matplotlib colors
+colors = [i for i in matplotlib.colors.cnames]
+
+###get directory where THIS file is
+dir_path = os.path.dirname(os.path.realpath(__file__))
+
+
+#Read filter file and extract system names
+h5f = h5py.File(os.path.join(dir_path[:-3],'filters/AstroFILT.hdf5'), 'r')
+Instrument=[]
+for i in h5f:
+    Instrument.append(i)
+
+#input from user to plot a given filter system
+system=input('Please enter your system %s:\t'%Instrument)
+
+# get and plot individual filters from the system
+if system in Instrument:
+
+    #plot the system given by the user
+    fig = plt.figure()
+    aa=plt.subplot(1,1,1)
+    aa.minorticks_on()
+        
+    #loop over each filter to plot their individual transmission curve   
+    wT=[]
+    TT=[]
+    k=0  #colors
+    for i in h5f['%s'%system]:
+        print(i)
+        wave=h5f['%s/%s'%(system,i)][0]
+        Tr=h5f['%s/%s'%(system,i)][1]
+        for (j,jj) in zip(wave,Tr):
+            wT.append(j)
+            TT.append(jj) 
+
+        aa.plot(wave,Tr,color=colors[k],label='$%s$'%i)
+        k+=1
+
+    handles, labels = aa.get_legend_handles_labels()
+    aa.minorticks_on()
+    aa.legend(handles[::], labels[::],loc=1, borderaxespad=0,prop={'size':10},scatterpoints=1)
+    aa.axis([min(wT)-100,max(wT)+100,min(TT),max(TT)])
+    aa.set_xlabel(r'Wavelength [$\mathrm{\AA}$]')
+    aa.set_ylabel(r'Transmission')
+    plt.show()
+
+else:
+
+    print('The system you gave not in the list, retry!')

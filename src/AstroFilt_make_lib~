@@ -1,0 +1,708 @@
+#!/usr/bin/python
+'''
+#####################################
+#####                           #####
+#####                           #####
+#####       ASTROFILT           #####
+#####                           #####
+#####       R.THOMAS~           #####
+#####                           #####
+#####################################
+
+This script stores all the filter / per system 
+in the AstroFILT.hdf5 file.
+
+@author: R. THOMAS
+@year: 2017
+@place: UV
+'''
+####python libraries
+import warnings
+warnings.simplefilter(action='ignore', category=FutureWarning)
+import h5py
+import numpy
+import os
+
+###remove the previous file
+#os.remove('../filters/AstroFILT.hdf5')
+
+###and open the first
+h5f = h5py.File('../filters/AstroFILT.hdf5', 'w')
+k=0
+
+
+#####2Mass
+H2ms,H2mf=numpy.loadtxt('../filters/2mass/H.pb').T
+J2ms,J2mf=numpy.loadtxt('../filters/2mass/J.pb').T
+Ks2ms,Ks2mf=numpy.loadtxt('../filters/2mass/Ks.pb').T
+mass2=h5f.create_group('2mass')
+H2mass=mass2.create_dataset('H-2Mass',data=[H2ms,H2mf])
+J2mass=mass2.create_dataset('J-2Mass',data=[J2ms,J2mf])
+Ks2mass=mass2.create_dataset('Ks-2Mass',data=[Ks2ms,Ks2mf])
+for i in mass2:
+	print (i)
+	k+=1
+
+#####AKARI
+L15s,L15f=numpy.loadtxt('../filters/AKARI-filters/AKARI_IRC.L15.dat').T
+L18s,L18f=numpy.loadtxt('../filters/AKARI-filters/AKARI_IRC.L18W.dat').T
+L24s,L24f=numpy.loadtxt('../filters/AKARI-filters/AKARI_IRC.L24.dat').T
+N2s,N2f=numpy.loadtxt('../filters/AKARI-filters/AKARI_IRC.N2.dat').T
+N3s,N3f=numpy.loadtxt('../filters/AKARI-filters/AKARI_IRC.N3.dat').T
+N4s,N4f=numpy.loadtxt('../filters/AKARI-filters/AKARI_IRC.N4.dat').T
+S11s,S11f=numpy.loadtxt('../filters/AKARI-filters/AKARI_IRC.S11.dat').T
+S7s,S7f=numpy.loadtxt('../filters/AKARI-filters/AKARI_IRC.S7.dat').T
+S9Ws,S9Wf=numpy.loadtxt('../filters/AKARI-filters/AKARI_IRC.S9W.dat').T
+N160s,N160f=numpy.loadtxt('../filters/AKARI-filters/AKARI_IRC.N4.dat').T
+N60s,N60f=numpy.loadtxt('../filters/AKARI-filters/AKARI_IRC.S11.dat').T
+WideLs,WideLf=numpy.loadtxt('../filters/AKARI-filters/AKARI_IRC.S7.dat').T
+WideSs,WideSf=numpy.loadtxt('../filters/AKARI-filters/AKARI_IRC.S9W.dat').T
+AKARI=h5f.create_group('AKARI')
+L15=AKARI.create_dataset('AKARI-L15',data=[L15s,L15f])
+L18=AKARI.create_dataset('AKARI-L18',data=[L18s,L18f])
+L24=AKARI.create_dataset('AKARI-L24',data=[L24s,L24f])
+N2=AKARI.create_dataset('AKARI-N2',data=[N2s,N2f])
+N3=AKARI.create_dataset('AKARI-N3',data=[N3s,N3f])
+N4=AKARI.create_dataset('AKARI-N4',data=[N4s,N4f])
+S11=AKARI.create_dataset('AKARI-S11',data=[S11s,S11f])
+S7=AKARI.create_dataset('AKARI-S7',data=[S7s,S7f])
+S9W=AKARI.create_dataset('AKARI-S9W',data=[S9Ws,S9Wf])
+N160=AKARI.create_dataset('AKARI-N160',data=[N160s,N160f])
+N60=AKARI.create_dataset('AKARI-N60',data=[N60s,N60f])
+WideL=AKARI.create_dataset('AKARI-Wide-L',data=[WideLs,WideLf])
+WideS=AKARI.create_dataset('AKARI-Wide-S',data=[WideSs,WideSf])
+for i in AKARI:
+	print (i)
+	k+=1
+
+
+####Basel
+gl,gf=numpy.loadtxt('../filters/Basel/Basel_g.dat').T
+rl,rf=numpy.loadtxt('../filters/Basel/Basel_r.dat').T
+ul,uf=numpy.loadtxt('../filters/Basel/Basel_u.dat').T
+basel=h5f.create_group('basel')
+u_basel=basel.create_dataset('u-Basel',data=[ul,uf])
+g_basel=basel.create_dataset('g-Basel',data=[gl,gf])
+r_absel=basel.create_dataset('r-Basel',data=[rl,rf])
+for i in basel:
+	print (i)
+	k+=1
+
+
+####CFHT_megaprime
+uc,uf=numpy.loadtxt('../filters/CFHT_megaprime/u_megaprime_sagem.res').T
+gc,gf=numpy.loadtxt('../filters/CFHT_megaprime/g_megaprime_sagem.res').T
+rc,rf=numpy.loadtxt('../filters/CFHT_megaprime/r_megaprime_sagem.res').T
+ic,i_f=numpy.loadtxt('../filters/CFHT_megaprime/i_megaprime_sagem.res').T
+zc,zf=numpy.loadtxt('../filters/CFHT_megaprime/z_megaprime_sagem.res').T
+megaprime=h5f.create_group('CFHT_megaprime')
+u_megacfht=megaprime.create_dataset('u-megaprime',data=[uc,uf])
+g_megacfht=megaprime.create_dataset('g-megaprime',data=[gc,gf])
+r_megacfht=megaprime.create_dataset('r-megaprime',data=[rc,rf])
+i_megacfht=megaprime.create_dataset('i-megaprime',data=[ic,i_f])
+z_megacfht=megaprime.create_dataset('z-megaprime',data=[zc,zf])
+for i in megaprime:
+	print (i)
+	k+=1
+
+
+###EFOCS
+R642s,R642f=numpy.loadtxt('../filters/EFOSC2/EFOSC2_R642.dat').T
+i705s,i705f=numpy.loadtxt('../filters/EFOSC2/EFOSC2_i705.dat').T
+z623s,z623f=numpy.loadtxt('../filters/EFOSC2/EFOSC2_z623.dat').T
+EFOCS=h5f.create_group('EFOCS')
+R642=EFOCS.create_dataset('EFOSC2_R642',data=[R642s,R642f])
+i705=EFOCS.create_dataset('EFOSC2_i705',data=[i705s,i705f])
+z623=EFOCS.create_dataset('EFOSC2_z263',data=[z623s,z623f])
+for i in EFOCS:
+	print (i)
+	k+=1
+
+
+##ESO
+esoHs,esoHf=numpy.loadtxt('../filters/ESO/ESO_H.dat').T
+esoJs,esoJf=numpy.loadtxt('../filters/ESO/ESO_J.dat').T
+esoKs,esoKf=numpy.loadtxt('../filters/ESO/ESO_K.dat').T
+esoLs,esoLf=numpy.loadtxt('../filters/ESO/ESO_L.dat').T
+esoU38s,esoU38f=numpy.loadtxt('../filters/ESO/ESO_U38.dat').T
+esoBs,esoBf=numpy.loadtxt('../filters/ESO/ESO_WFI_B.dat').T
+esoIs,esoIf=numpy.loadtxt('../filters/ESO/ESO_WFI_I.dat').T
+esoRs,esoRf=numpy.loadtxt('../filters/ESO/ESO_WFI_R.dat').T
+esoVs,esoVf=numpy.loadtxt('../filters/ESO/ESO_WFI_V.dat').T
+ESO=h5f.create_group('ESO')
+esoH=ESO.create_dataset('ESO-H',data=[esoHs,esoHf])
+esoJ=ESO.create_dataset('ESO-J',data=[esoJs,esoJf])
+esoK=ESO.create_dataset('ESO-K',data=[esoKs,esoKf])
+esoL=ESO.create_dataset('ESO-L',data=[esoLs,esoLf])
+esoU=ESO.create_dataset('ESO-U38',data=[esoU38s,esoU38f])
+esoB=ESO.create_dataset('ESO-WFI-B',data=[esoBs,esoBf])
+esoI=ESO.create_dataset('ESO-WFI-I',data=[esoIs,esoIf])
+esoR=ESO.create_dataset('ESO-WFI-R',data=[esoRs,esoRf])
+esoV=ESO.create_dataset('ESO-WFI-V',data=[esoVs,esoVf])
+for i in ESO:
+	print (i)
+	k+=1
+
+#FLAMINGOS
+FLAHs,FLAHf=numpy.loadtxt('../filters/FLAMINGOS/FLAMINGOS-H').T
+FLAJs,FLAJf=numpy.loadtxt('../filters/FLAMINGOS/FLAMINGOS-J').T
+FLAKs,FLAKsf=numpy.loadtxt('../filters/FLAMINGOS/FLAMINGOS-Ks').T
+flamin=h5f.create_group('FLAMINGOS')
+FLAH=flamin.create_dataset('H-Flamingos',data=[FLAHs,FLAHf])
+FLAJ=flamin.create_dataset('J-Flamingos',data=[FLAJs,FLAJf])
+FLAKs=flamin.create_dataset('Ks-Flamingos',data=[FLAKs,FLAKsf])
+for i in flamin:
+	print (i)
+	k+=1
+
+#FORS
+bessBs,bessBf=numpy.loadtxt('../filters/FORS/M_BESS_B.txt').T
+bessIs,bessIf=numpy.loadtxt('../filters/FORS/M_BESS_I.txt').T
+bessRs,bessRf=numpy.loadtxt('../filters/FORS/M_BESS_R.txt').T
+bessUs,bessUf=numpy.loadtxt('../filters/FORS/M_BESS_U.txt').T
+bessVs,bessVf=numpy.loadtxt('../filters/FORS/M_BESS_V.txt').T
+gunnUs,gunnUf=numpy.loadtxt('../filters/FORS/M_GUNN_U.txt').T
+gunnRs,gunnRf=numpy.loadtxt('../filters/FORS/M_GUNN_R.txt').T
+gunnGs,gunnGf=numpy.loadtxt('../filters/FORS/M_GUNN_G.txt').T
+gunnVs,gunnVf=numpy.loadtxt('../filters/FORS/M_GUNN_V.txt').T
+gunnZs,gunnZf=numpy.loadtxt('../filters/FORS/M_GUNN_Z.txt').T
+FORS=h5f.create_group('FORS')
+bessB=FORS.create_dataset('FORS-BESS-B',data=[10*bessBs,bessBf])
+bessI=FORS.create_dataset('FORS-BESS-I',data=[10*bessIs,bessIf])
+bessR=FORS.create_dataset('FORS-BESS-R',data=[10*bessRs,bessRf])
+bessU=FORS.create_dataset('FORS-BESS-U',data=[10*bessUs,bessUf])
+bessV=FORS.create_dataset('FORS-BESS-V',data=[10*bessVs,bessVf])
+gunnU=FORS.create_dataset('FORS-GUNN-U',data=[10*gunnUs,gunnUf])
+gunnR=FORS.create_dataset('FORS-GUNN-R',data=[10*gunnRs,gunnRf])
+gunnG=FORS.create_dataset('FORS-GUNN-G',data=[10*gunnGs,gunnGf])
+gunnV=FORS.create_dataset('FORS-GUNN-V',data=[10*gunnVs,gunnVf])
+gunnZ=FORS.create_dataset('FORS-GUNN-Z',data=[10*gunnZs,gunnZf])
+for i in FORS:
+	print (i)
+	k+=1
+
+###Galex
+GFUVs,GFUVf=numpy.loadtxt('../filters/Galex/galex1500.res').T
+GNUVs,GNUVf=numpy.loadtxt('../filters/Galex/galex2500.res').T
+Galex=h5f.create_group('GALEX')
+FUV=Galex.create_dataset('FUV-GALEX',data=[GFUVs,GFUVf])
+NUV=Galex.create_dataset('NUV-GALEX',data=[GNUVs,GNUVf])
+for i in Galex:
+	print (i)
+	k+=1
+
+#GEMINI-GMOS
+gmosus,gmosuf=numpy.loadtxt('../filters/Gemini_GMOS/Gemini_GMOS-S_u.txt').T
+gmosgs,gmosgf=numpy.loadtxt('../filters/Gemini_GMOS/Gemini_GMOS-S_g.txt').T
+gmosrs,gmosrf=numpy.loadtxt('../filters/Gemini_GMOS/Gemini_GMOS-S_r.txt').T
+gmosis,gmosif=numpy.loadtxt('../filters/Gemini_GMOS/Gemini_GMOS-S_i.txt').T
+gmoszs,gmoszf=numpy.loadtxt('../filters/Gemini_GMOS/Gemini_GMOS-S_z.txt').T
+gmos=h5f.create_group('GMOS')
+gmosU=gmos.create_dataset('GMOS-u',data=[gmosus,gmosuf])
+gmosG=gmos.create_dataset('GMOS-g',data=[gmosgs,gmosgf])
+gmosR=gmos.create_dataset('GMOS-r',data=[gmosrs,gmosrf])
+gmosI=gmos.create_dataset('GMOS-i',data=[gmosis,gmosif])
+gmosZ=gmos.create_dataset('GMOS-z',data=[gmoszs,gmoszf])
+for i in gmos:
+	print (i)
+	k+=1
+
+#####HST
+
+F435s,F435f=numpy.loadtxt('../filters/HST/ACS_WFC.F435W.dat').T
+F475s,F475f=numpy.loadtxt('../filters/HST/ACS_F475W.res').T
+F606s,F606f=numpy.loadtxt('../filters/HST/ACS_F606W.res').T
+F775s,F775f=numpy.loadtxt('../filters/HST/ACS_WFC.F775W.dat').T
+F814s,F814f=numpy.loadtxt('../filters/HST/ACS_F814W.res').T
+F850s,F850f=numpy.loadtxt('../filters/HST/ACS_WFC.F850LP.dat').T
+
+F300s,F300f=numpy.loadtxt('../filters/HST/F300W_WFPC2.res').T
+F450s,F450f=numpy.loadtxt('../filters/HST/F450W_WFPC2.res').T
+
+F098s,F098f=numpy.loadtxt('../filters/HST/WFC3_IR.F098M.dat').T #
+F105s,F105f=numpy.loadtxt('../filters/HST/WFC3_IR.F105W.dat').T #
+
+F125s,F125f=numpy.loadtxt('../filters/HST/wfc3-F125W.res').T
+F140s,F140f=numpy.loadtxt('../filters/HST/wfc3-F140W.res').T
+F160s,F160f=numpy.loadtxt('../filters/HST/wfc3-F160W.res').T
+
+N110s,N110f=numpy.loadtxt('../filters/HST/NICMOS_F110W.res').T
+N160s,N160f=numpy.loadtxt('../filters/HST/NICMOS_F160W.res').T
+N222s,N222f=numpy.loadtxt('../filters/HST/NICMOS_F222M.res').T
+
+HST=h5f.create_group('HST')
+F435F=HST.create_dataset('ACS-F435W',data=[F435s,F435f])
+F475F=HST.create_dataset('ACS-F475W',data=[F475s,F475f])
+F606F=HST.create_dataset('ACS-F606W',data=[F606s,F606f])
+F775F=HST.create_dataset('ACS-F775W',data=[F775s,F775f])
+F814F=HST.create_dataset('ACS-F814W',data=[F814s,F814f])
+F850F=HST.create_dataset('ACS-F850W',data=[F850s,F850f])
+F098F=HST.create_dataset('ACS-F098M',data=[F098s,F098f])
+F105F=HST.create_dataset('ACS-F105M',data=[F105s,F105f])
+F300F=HST.create_dataset('F300-WFPC2',data=[F300s,F300f])
+F450F=HST.create_dataset('F450-WFPC2',data=[F450s,F450f])
+F125F=HST.create_dataset('wfc3-F125W',data=[F125s,F125f])
+F140F=HST.create_dataset('wfc3-F140W',data=[F140s,F140f])
+F160F=HST.create_dataset('wfc3-F160W',data=[F160s,F160f])
+N160=HST.create_dataset('NICMOS-F160W',data=[N160s,N160f])
+N110=HST.create_dataset('NICMOS-F110W',data=[N110s,N110f])
+N222=HST.create_dataset('NICMOS-F222W',data=[N222s,N222f])
+for i in HST:
+	print (i)
+	k+=1
+
+
+#Hawk-I
+HawkKs,HawkKf=numpy.loadtxt('../filters/Hawk-I/Hawki_Ks.dat').T
+HawkYs,HawkYf=numpy.loadtxt('../filters/Hawk-I/Hawki_Y.dat').T
+hawki=h5f.create_group('Hawk-I')
+hawkK=hawki.create_dataset('Hawk-Ks',data=[HawkKs,HawkKf])
+hawkY=hawki.create_dataset('Hawk-Y',data=[HawkYs,HawkYf])
+for i in hawki:
+	print (i)
+	k+=1
+
+#####Herschel
+PACS100s,PACS100f=numpy.loadtxt('../filters/Herschel/PACS_filter_100.txt').T
+PACS160s,PACS160f=numpy.loadtxt('../filters/Herschel/PACS_filter_160.txt').T
+SPIRE250s,SPIRE250f=numpy.loadtxt('../filters/Herschel/SPIRE_filter_250.txt').T
+SPIRE350s,SPIRE350f=numpy.loadtxt('../filters/Herschel/SPIRE_filter_350.txt').T
+SPIRE500s,SPIRE500f=numpy.loadtxt('../filters/Herschel/SPIRE_filter_500.txt').T
+Herschel=h5f.create_group('Herschel')
+PACS100=Herschel.create_dataset('100-PACS',data=[PACS100s,PACS100f])
+PACS160=Herschel.create_dataset('160-PACS',data=[PACS160s,PACS160f])
+SPIRE250=Herschel.create_dataset('250-SPIRE',data=[SPIRE250s,SPIRE250f])
+SPIRE350=Herschel.create_dataset('350-SPIRE',data=[SPIRE350s,SPIRE350f])
+SPIRE500=Herschel.create_dataset('500-SPIRE',data=[SPIRE500s,SPIRE500f])
+for i in Herschel:
+	print (i)
+	k+=1
+
+##IRAS
+iras100s,iras100f=numpy.loadtxt('../filters/IRAS/IRAS_100mu.dat').T
+iras12s,iras12f=numpy.loadtxt('../filters/IRAS/IRAS_12mu.dat').T
+iras25s,iras25f=numpy.loadtxt('../filters/IRAS/IRAS_25mu.dat').T
+iras60s,iras60f=numpy.loadtxt('../filters/IRAS/IRAS_60mu.dat').T
+IRAS=h5f.create_group('IRAS')
+iras100=IRAS.create_dataset('IRAS-100m',data=[iras100s,iras100f])
+iras12=IRAS.create_dataset('IRAS-12m',data=[iras12s,iras12f])
+iras25=IRAS.create_dataset('IRAS-25m',data=[iras25s,iras25f])
+iras60=IRAS.create_dataset('IRAS-60m',data=[iras60s,iras60f])
+for i in IRAS:
+	print (i)
+	k+=1
+
+##ISAAC
+isaaHs,isaaHf=numpy.loadtxt('../filters/ISAAC/ISAAC_H.dat').T
+isaaJs,isaaJf=numpy.loadtxt('../filters/ISAAC/ISAAC_J.dat').T
+isaaKs,isaaKf=numpy.loadtxt('../filters/ISAAC/ISAAC_Ks.dat').T
+isaac=h5f.create_group('ISAAC')
+isaaH=isaac.create_dataset('ISAAC-H',data=[isaaHs,isaaHf])
+isaaJ=isaac.create_dataset('ISAAC-J',data=[isaaJs,isaaJf])
+isaaK=isaac.create_dataset('ISAAC-Ks',data=[isaaKs,isaaKf])
+for i in isaac:
+	print (i)
+	k+=1
+
+
+##Johnsson
+JonIs,JonIf=numpy.loadtxt('../filters/Johnson/Johnson_I.dat').T
+JonJs,JonJf=numpy.loadtxt('../filters/Johnson/Johnson_J.dat').T
+JonKs,JonKf=numpy.loadtxt('../filters/Johnson/Johnson_K.dat').T
+JonLs,JonLf=numpy.loadtxt('../filters/Johnson/Johnson_L.dat').T
+JonRs,JonRf=numpy.loadtxt('../filters/Johnson/Johnson_R.dat').T
+jon=h5f.create_group('Johnsson')
+JonI=jon.create_dataset('Johnson-I',data=[JonIs,JonIf])
+JonJ=jon.create_dataset('Johnson-J',data=[JonJs,JonJf])
+JonK=jon.create_dataset('Johnson-K',data=[JonKs,JonKf])
+JonL=jon.create_dataset('Johnson-L',data=[JonLs,JonLf])
+JonR=jon.create_dataset('Johnson-R',data=[JonRs,JonRf])
+for i in jon:
+	print (i)
+	k+=1
+
+
+#####megacam
+umegs,umegf=numpy.loadtxt('../filters/MEGACAM/up.pb').T
+gmegs,gmegf=numpy.loadtxt('../filters/MEGACAM/gp.pb').T
+rmegs,rmegf=numpy.loadtxt('../filters/MEGACAM/rp.pb').T
+imegs,imegf=numpy.loadtxt('../filters/MEGACAM/ip.pb').T
+zmegs,zmegf=numpy.loadtxt('../filters/MEGACAM/zp.pb').T
+megacam=h5f.create_group('megacam')
+umeg=megacam.create_dataset('u-megacam',data=[umegs,umegf])
+gmeg=megacam.create_dataset('g-megacam',data=[gmegs,gmegf])
+rmeg=megacam.create_dataset('r-megacam',data=[rmegs,rmegf])
+imeg=megacam.create_dataset('i-megacam',data=[imegs,imegf])
+zmeg=megacam.create_dataset('z-megacam',data=[zmegs,zmegf])
+for i in megacam:
+	print (i)
+	k+=1
+
+
+##MOSAIC
+MosBs,MosBf=numpy.loadtxt('../filters/MOSAIC/MOSAIC_B.dat').T
+MosRs,MosRf=numpy.loadtxt('../filters/MOSAIC/MOSAIC_R.dat').T
+MosVs,MosVf=numpy.loadtxt('../filters/MOSAIC/MOSAIC_V.dat').T
+mosaic=h5f.create_group('MOSAIC')
+MosB=mosaic.create_dataset('MOSAIC-B',data=[MosBs,MosBf])
+MosR=mosaic.create_dataset('MOSAIC-R',data=[MosRs,MosRf])
+MosV=mosaic.create_dataset('MOSAIC-V',data=[MosVs,MosVf])
+for i in mosaic:
+	print (i)
+	k+=1
+
+##MUSYC
+MUSBs,MUSBf=numpy.loadtxt('../filters/MUSYC/MUSYC_B.dat').T
+MUSIs,MUSIf=numpy.loadtxt('../filters/MUSYC/MUSYC_I.dat').T
+MUSRs,MUSRf=numpy.loadtxt('../filters/MUSYC/MUSYC_R.dat').T
+MUSUs,MUSUf=numpy.loadtxt('../filters/MUSYC/MUSYC_U.dat').T
+MUSVs,MUSVf=numpy.loadtxt('../filters/MUSYC/MUSYC_V.dat').T
+MUSzs,MUSzf=numpy.loadtxt('../filters/MUSYC/MUSYC_z.dat').T
+MUSJs,MUSJf=numpy.loadtxt('../filters/MUSYC/MUSYC_J.dat').T
+MUSHs,MUSHf=numpy.loadtxt('../filters/MUSYC/MUSYC_H.dat').T
+MUSKs,MUSKf=numpy.loadtxt('../filters/MUSYC/MUSYC_K.dat').T
+
+musyc=h5f.create_group('MUSYC')
+MUSB=musyc.create_dataset('MUSYC-B',data=[MUSBs,MUSBf])
+MUSI=musyc.create_dataset('MUSYC-I',data=[MUSIs,MUSIf])
+MUSR=musyc.create_dataset('MUSYC-R',data=[MUSRs,MUSRf])
+MUSU=musyc.create_dataset('MUSYC-U',data=[MUSUs,MUSUf])
+MUSV=musyc.create_dataset('MUSYC-V',data=[MUSVs,MUSVf])
+MUSz=musyc.create_dataset('MUSYC-z',data=[MUSzs,MUSzf])
+MUSJ=musyc.create_dataset('MUSYC-J',data=[MUSJs,MUSJf])
+MUSH=musyc.create_dataset('MUSYC-H',data=[MUSHs,MUSHf])
+MUSK=musyc.create_dataset('MUSYC-K',data=[MUSKs,MUSKf])
+for i in musyc:
+	print (i)
+	k+=1
+
+####Newfirm
+J1s,J1f=numpy.loadtxt('../filters/NEWfirm/J1.res').T
+J2s,J2f=numpy.loadtxt('../filters/NEWfirm/J2.res').T
+J3s,J3f=numpy.loadtxt('../filters/NEWfirm/J3.res').T
+H1s,H1f=numpy.loadtxt('../filters/NEWfirm/H1.res').T
+H2s,H2f=numpy.loadtxt('../filters/NEWfirm/H2.res').T
+Kss,Ksf=numpy.loadtxt('../filters/NEWfirm/Ks_newfirm.res').T
+NEWFIRM=h5f.create_group('Newfirm')
+J1=NEWFIRM.create_dataset('J1-Newfirm',data=[J1s,J1f])
+J2=NEWFIRM.create_dataset('J2-Newfirm',data=[J2s,J2f])
+J3=NEWFIRM.create_dataset('J3-Newfirm',data=[J3s,J3f])
+H1=NEWFIRM.create_dataset('H1-Newfirm',data=[H1s,H1f])
+H2=NEWFIRM.create_dataset('H2-Newfirm',data=[H2s,H2f])
+KsNF=NEWFIRM.create_dataset('Ks-Newfirm',data=[Kss,Ksf])
+for i in NEWFIRM:
+	print (i)
+	k+=1
+
+
+##OAO-UV
+uv1l,uv1f=numpy.loadtxt('../filters/OAO-UV/OAO-UV1.dat').T
+uv2l,uv2f=numpy.loadtxt('../filters/OAO-UV/OAO-UV2.dat').T
+uv3l,uv3f=numpy.loadtxt('../filters/OAO-UV/OAO-UV3.dat').T
+uv4l,uv4f=numpy.loadtxt('../filters/OAO-UV/OAO-UV4.dat').T
+uv5l,uv5f=numpy.loadtxt('../filters/OAO-UV/OAO-UV5.dat').T
+uv6l,uv6f=numpy.loadtxt('../filters/OAO-UV/OAO-UV6.dat').T
+oao=h5f.create_group('OAO-UV')
+uv1=oao.create_dataset('OAO-UV1',data=[uv1l,uv1f])
+uv2=oao.create_dataset('OAO-UV2',data=[uv2l,uv2f])
+uv3=oao.create_dataset('OAO-UV3',data=[uv3l,uv3f])
+uv4=oao.create_dataset('OAO-UV4',data=[uv4l,uv4f])
+uv5=oao.create_dataset('OAO-UV5',data=[uv5l,uv5f])
+uv6=oao.create_dataset('OAO-UV6',data=[uv6l,uv6f])
+for i in oao:
+	print (i)
+	k+=1
+
+
+####SDSS 
+ul,uf=numpy.loadtxt('../filters/SDSS/u_SDSS.res').T
+gl,gf=numpy.loadtxt('../filters/SDSS/g_SDSS.res').T
+rl,rf=numpy.loadtxt('../filters/SDSS/r_SDSS.res').T
+i_l,i_f=numpy.loadtxt('../filters/SDSS/i_SDSS.res').T
+zl,zf=numpy.loadtxt('../filters/SDSS/z_SDSS.res').T
+sdss=h5f.create_group('sdss')
+u_sdss=sdss.create_dataset('u-sdss',data=[ul,uf])
+g_sdss=sdss.create_dataset('g-sdss',data=[gl,gf])
+r_sdss=sdss.create_dataset('r-sdss',data=[rl,rf])
+i_sdss=sdss.create_dataset('i-sdss',data=[i_l,i_f])
+z_sdss=sdss.create_dataset('z-sdss',data=[zl,zf])
+for i in sdss:
+	print (i)
+	k+=1
+
+
+##ST-UV
+STUV14s,STUV14f=numpy.loadtxt('../filters/ST-UV/ST-UV14.dat').T
+STUV17s,STUV17f=numpy.loadtxt('../filters/ST-UV/ST-UV17.dat').T
+STUV22s,STUV22f=numpy.loadtxt('../filters/ST-UV/ST-UV22.dat').T
+STUV27s,STUV27f=numpy.loadtxt('../filters/ST-UV/ST-UV27.dat').T
+stuv=h5f.create_group('ST-UV')
+stuv14=stuv.create_dataset('ST-UV14',data=[STUV14s,STUV14f])
+stuv17=stuv.create_dataset('ST-UV17',data=[STUV17s,STUV17f])
+stuv22=stuv.create_dataset('ST-UV22',data=[STUV22s,STUV22f])
+stuv27=stuv.create_dataset('ST-UV27',data=[STUV27s,STUV27f])
+for i in stuv:
+	print (i)
+	k+=1
+
+#####steidel
+usteis,usteif=numpy.loadtxt('../filters/STEIDEL/U.pb').T
+gsteis,gsteif=numpy.loadtxt('../filters/STEIDEL/G.pb').T
+rsteis,rsteif=numpy.loadtxt('../filters/STEIDEL/R.pb').T
+steidel=h5f.create_group('steidel')
+ustei=steidel.create_dataset('U-Steidel',data=[usteis,usteif])
+gstei=steidel.create_dataset('G-Steidel',data=[gsteis,gsteif])
+rstei=steidel.create_dataset('R-Steidel',data=[rsteis,rsteif])
+for i in steidel:
+	print (i)
+	k+=1
+
+
+#SWIFT
+swbs,swbf=numpy.loadtxt('../filters/SWIFT/SWIFT_UVOT_filter_b.dat').T
+swus,swuf=numpy.loadtxt('../filters/SWIFT/SWIFT_UVOT_filter_u.dat').T
+swuvm2s,swuvm2f=numpy.loadtxt('../filters/SWIFT/SWIFT_UVOT_filter_uvm2.dat').T
+swuvw1s,swuvw1f=numpy.loadtxt('../filters/SWIFT/SWIFT_UVOT_filter_uvw1.dat').T
+swuvw2s,swuvw2f=numpy.loadtxt('../filters/SWIFT/SWIFT_UVOT_filter_uvw2.dat').T
+swvs,swvf=numpy.loadtxt('../filters/SWIFT/SWIFT_UVOT_filter_v.dat').T
+swift=h5f.create_group('SWIFT')
+swb=swift.create_dataset('SWIFT-b',data=[swbs,swbf])
+swu=swift.create_dataset('SWIFT-u',data=[swus,swuf])
+swuvm2=swift.create_dataset('SWIFT-uvm2',data=[swuvm2s,swuvm2f])
+swuvw1=swift.create_dataset('SWIFT-uvw1',data=[swuvw1s,swuvw1f])
+swuvw2=swift.create_dataset('SWIFT-uvw2',data=[swuvw2s,swuvw2f])
+swv=swift.create_dataset('SWIFT-v',data=[swvs,swvf])
+for i in swift:
+	print (i)
+	k+=1
+
+###spitzer
+I1s,I1f=numpy.loadtxt('../filters/Spitzer/irac_ch1.res').T
+I2s,I2f=numpy.loadtxt('../filters/Spitzer/irac_ch2.res').T
+I3s,I3f=numpy.loadtxt('../filters/Spitzer/irac_ch3.res').T
+I4s,I4f=numpy.loadtxt('../filters/Spitzer/irac_ch4.res').T
+m24s,m24f=numpy.loadtxt('../filters/Spitzer/mips_24.pb').T
+m70s,m70f=numpy.loadtxt('../filters/Spitzer/mips_70.pb').T
+m160s,m160f=numpy.loadtxt('../filters/Spitzer/mips_160.pb').T
+SPITZER=h5f.create_group('SPITZER')
+I1=SPITZER.create_dataset('IRAC1',data=[I1s,I1f])
+I2=SPITZER.create_dataset('IRAC2',data=[I2s,I2f])
+I3=SPITZER.create_dataset('IRAC3',data=[I3s,I3f])
+I4=SPITZER.create_dataset('IRAC4',data=[I4s,I4f])
+MIPS24=SPITZER.create_dataset('24-MIPS',data=[m24s,m24f])
+MIPS70=SPITZER.create_dataset('70-MIPS',data=[m70s,m70f])
+MIPS160=SPITZER.create_dataset('160-MIPS',data=[m160s,m160f])
+for i in SPITZER:
+	print (i)
+	k+=1
+
+
+####Subaru
+#broadband
+bs,bsf=numpy.loadtxt('../filters/Subaru_suprime/B_subaru.res').T
+gs,gsf=numpy.loadtxt('../filters/Subaru_suprime/g_subaru.res').T
+rs,rsf=numpy.loadtxt('../filters/Subaru_suprime/r_subaru.res').T
+i_s,isf=numpy.loadtxt('../filters/Subaru_suprime/i_subaru.res').T
+zs,zsf=numpy.loadtxt('../filters/Subaru_suprime/z_subaru.res').T
+Vs,Vsf=numpy.loadtxt('../filters/Subaru_suprime/V_subaru.res').T
+z2s,z2sf=numpy.loadtxt('../filters/Subaru_suprime/suprime_FDCCD_z.res').T
+###Intermediate band
+IB427s,IB427f=numpy.loadtxt('../filters/Subaru_suprime/IB427.SuprimeCam.pb').T
+IB464s,IB464f=numpy.loadtxt('../filters/Subaru_suprime/IB464.SuprimeCam.pb').T
+IB484s,IB484f=numpy.loadtxt('../filters/Subaru_suprime/IB484.SuprimeCam.pb').T
+IB505s,IB505f=numpy.loadtxt('../filters/Subaru_suprime/IB505.SuprimeCam.pb').T
+IB527s,IB527f=numpy.loadtxt('../filters/Subaru_suprime/IB527.SuprimeCam.pb').T
+IB574s,IB574f=numpy.loadtxt('../filters/Subaru_suprime/IB574.SuprimeCam.pb').T
+IB624s,IB624f=numpy.loadtxt('../filters/Subaru_suprime/IB624.SuprimeCam.pb').T
+IB679s,IB679f=numpy.loadtxt('../filters/Subaru_suprime/IB679.SuprimeCam.pb').T
+IB709s,IB709f=numpy.loadtxt('../filters/Subaru_suprime/IB709.SuprimeCam.pb').T
+IB738s,IB738f=numpy.loadtxt('../filters/Subaru_suprime/IB738.SuprimeCam.pb').T
+IB767s,IB767f=numpy.loadtxt('../filters/Subaru_suprime/IB767.SuprimeCam.pb').T
+IB827s,IB827f=numpy.loadtxt('../filters/Subaru_suprime/IB827.SuprimeCam.pb').T
+###Narrow band
+NB711s,NB711f=numpy.loadtxt('../filters/Subaru_suprime/NB711.SuprimeCam.pb').T
+NB816s,NB816f=numpy.loadtxt('../filters/Subaru_suprime/NB816.SuprimeCam.pb').T
+subaru_suprime=h5f.create_group('Subaru_suprime')
+B_sub=subaru_suprime.create_dataset('B-Sub-suprime',data=[bs,bsf])
+g_sub=subaru_suprime.create_dataset('g-Sub-suprime',data=[gs,gsf])
+V_sub=subaru_suprime.create_dataset('V-Sub-suprime',data=[Vs,Vsf])
+r_sub=subaru_suprime.create_dataset('r-Sub-suprime',data=[rs,rsf])
+i_sub=subaru_suprime.create_dataset('i-Sub-suprime',data=[i_s,isf])
+z_sub=subaru_suprime.create_dataset('z1-Sub-suprime',data=[zs,zsf])
+z2_sub=subaru_suprime.create_dataset('z2-Sub-suprime',data=[z2s,z2sf])
+IB427_sub=subaru_suprime.create_dataset('IB427-Sub-suprime',data=[IB427s,IB427f])
+IB464_sub=subaru_suprime.create_dataset('IB464-Sub-suprime',data=[IB464s,IB464f])
+IB484_sub=subaru_suprime.create_dataset('IB484-Sub-suprime',data=[IB484s,IB484f])
+IB505_sub=subaru_suprime.create_dataset('IB505-Sub-suprime',data=[IB505s,IB505f])
+IB527_sub=subaru_suprime.create_dataset('IB527-Sub-suprime',data=[IB527s,IB527f])
+IB574_sub=subaru_suprime.create_dataset('IB574-Sub-suprime',data=[IB574s,IB574f])
+IB624_sub=subaru_suprime.create_dataset('IB624-Sub-suprime',data=[IB624s,IB624f])
+IB679_sub=subaru_suprime.create_dataset('IB679-Sub-suprime',data=[IB679s,IB679f])
+IB709_sub=subaru_suprime.create_dataset('IB709-Sub-suprime',data=[IB709s,IB709f])
+IB738_sub=subaru_suprime.create_dataset('IB738-Sub-suprime',data=[IB738s,IB738f])
+IB767_sub=subaru_suprime.create_dataset('IB767-Sub-suprime',data=[IB767s,IB767f])
+IB827_sub=subaru_suprime.create_dataset('IB827-Sub-suprime',data=[IB827s,IB827f])
+NB711_sub=subaru_suprime.create_dataset('NB711-Sub-suprime',data=[NB711s,NB711f])
+NB816_sub=subaru_suprime.create_dataset('NB816-Sub-suprime',data=[NB816s,NB816f])
+for i in subaru_suprime:
+	print (i)
+	k+=1
+
+
+#####ukidss
+Bukis,Bukif=numpy.loadtxt('../filters/UKIDSS/Brg.pb').T
+Hukis,Hukif=numpy.loadtxt('../filters/UKIDSS/H.pb').T
+H2ukis,H2ukif=numpy.loadtxt('../filters/UKIDSS/H2.pb').T
+Jukis,Jukif=numpy.loadtxt('../filters/UKIDSS/J.pb').T
+Kukis,Kukif=numpy.loadtxt('../filters/UKIDSS/K.pb').T
+Yukis,Yukif=numpy.loadtxt('../filters/UKIDSS/Y.pb').T
+Zukis,Zukif=numpy.loadtxt('../filters/UKIDSS/Z.pb').T
+ukidss=h5f.create_group('ukidss')
+Bukidss=ukidss.create_dataset('B-ukidss',data=[Bukis,Bukif])
+Hukidss=ukidss.create_dataset('H-ukidss',data=[Hukis,Hukif])
+H2ukidss=ukidss.create_dataset('H2-ukidss',data=[H2ukis,H2ukif])
+Jukidss=ukidss.create_dataset('J-ukidss',data=[Jukis,Jukif])
+Kukidss=ukidss.create_dataset('K-ukidss',data=[Kukis,Kukif])
+Yukidss=ukidss.create_dataset('Y-ukidss',data=[Yukis,Yukif])
+Zukidss=ukidss.create_dataset('Z-ukidss',data=[Zukis,Zukif])
+for i in ukidss:
+	print (i)
+	k+=1
+    
+
+##VIMOS
+Rvims,Rvimf=numpy.loadtxt('../filters/VIMOS/VIMOS_R.txt').T
+Uvims,Uvimf=numpy.loadtxt('../filters/VIMOS/VIMOS_U.txt').T
+vimos=h5f.create_group('VIMOS')
+Rvim=vimos.create_dataset('VIMOS-R',data=[Rvims,Rvimf])
+Uvim=vimos.create_dataset('VIMOS-U',data=[Uvims,Uvimf])
+for i in vimos:
+	print (i)
+	k+=1
+
+####VISTA_VIRCAM
+Yuvs,Yuvf=numpy.loadtxt('../filters/VISTA_VIRCAM/Y_uv.res').T
+Juvs,Juvf=numpy.loadtxt('../filters/VISTA_VIRCAM/J_uv.res').T
+Huvs,Huvf=numpy.loadtxt('../filters/VISTA_VIRCAM/H_uv.res').T
+Kuvs,Kuvf=numpy.loadtxt('../filters/VISTA_VIRCAM/K_uv.res').T
+Vista_VIRCAM=h5f.create_group('Vista_Vircam')
+Y_uv=Vista_VIRCAM.create_dataset('Y-Vista-VIRCAM',data=[Yuvs,Yuvf])
+J_uv=Vista_VIRCAM.create_dataset('J-Vista-VIRCAM',data=[Juvs,Juvf])
+H_uv=Vista_VIRCAM.create_dataset('H-Vista-VIRCAM',data=[Huvs,Huvf])
+Ks_uv=Vista_VIRCAM.create_dataset('Ks-Vista-VIRCAM',data=[Kuvs,Kuvf])
+for i in Vista_VIRCAM:
+	print (i)
+	k+=1
+
+
+##WFPC2
+WFPC2300s,WFPC2300f=numpy.loadtxt('../filters/WFPC2/WFPC2_F300W.dat').T
+WFPC2450s,WFPC2450f=numpy.loadtxt('../filters/WFPC2/WFPC2_F450W.dat').T
+WFPC2606s,WFPC2606f=numpy.loadtxt('../filters/WFPC2/WFPC2_F606W.dat').T
+WFPC2814s,WFPC2814f=numpy.loadtxt('../filters/WFPC2/WFPC2_F814W.dat').T
+wfpc2=h5f.create_group('WFPC2')
+WFPC2300=wfpc2.create_dataset('WFPC2-F300W',data=[WFPC2300s,WFPC2300f])
+WFPC2450=wfpc2.create_dataset('WFPC2-F450W',data=[WFPC2450s,WFPC2450f])
+WFPC2606=wfpc2.create_dataset('WFPC2-F606W',data=[WFPC2606s,WFPC2606f])
+WFPC2814=wfpc2.create_dataset('WFPC2-F814W',data=[WFPC2814s,WFPC2814f])
+for i in wfpc2:
+	print (i)
+	k+=1
+
+####WIRCAM
+JWIRL,JWIRF=numpy.loadtxt('../filters/Wircam/J_WIRCAM.res').T
+HWIRL,HWIRF=numpy.loadtxt('../filters/Wircam/H_WIRCAM.res').T
+KWIRL,KWIRF=numpy.loadtxt('../filters/Wircam/K_WIRCAM.res').T
+wircam=h5f.create_group('wircam')
+Jwircam=wircam.create_dataset('J-wircam',data=[JWIRL,JWIRF])
+Hwircam=wircam.create_dataset('H-wircam',data=[HWIRL,HWIRF])
+Kwircam=wircam.create_dataset('K-wircam',data=[KWIRL,KWIRF])
+for i in wircam:
+	print (i)
+	k+=1
+
+
+##XMM
+XMMBL,XMMBF=numpy.loadtxt('../filters/XMM/XMM_B.dat').T
+XMMUL,XMMUF=numpy.loadtxt('../filters/XMM/XMM_U.dat').T
+XMMVL,XMMVF=numpy.loadtxt('../filters/XMM/XMM_V.dat').T
+XMMUVM2L,XMMUVM2F=numpy.loadtxt('../filters/XMM/XMM_UVM2.dat').T
+XMMUVW2L,XMMUVW2F=numpy.loadtxt('../filters/XMM/XMM_UVW2.dat').T
+XMMUVW1L,XMMUVW1F=numpy.loadtxt('../filters/XMM/XMM_UVW1.dat').T
+XMMVL,XMMVF=numpy.loadtxt('../filters/XMM/XMM_V.dat').T
+xmm=h5f.create_group('XMM')
+XMMB=xmm.create_dataset('XMM-B',data=[XMMBL,XMMBF])
+XMMU=xmm.create_dataset('XMM-U',data=[XMMUL,XMMUF])
+XMMUVM2=xmm.create_dataset('XMM-UVM2',data=[XMMUVM2L,XMMUVM2F])
+XMMUVW2=xmm.create_dataset('XMM-UVW2',data=[XMMUVW2L,XMMUVW2F])
+XMMUVW1=xmm.create_dataset('XMM-UVW1',data=[XMMUVW1L,XMMUVW1F])
+XMMV=xmm.create_dataset('XMM-V',data=[XMMVL,XMMVF])
+for i in xmm:
+	print (i)
+	k+=1
+
+###JWST General Purpose filters
+#F070W.dat  F090W.dat  F115W.dat  F150W.dat  F200W.dat  F277.dat  F356W.dat  F444W.dat
+F070L, F070F = numpy.loadtxt('../filters/NIRCAM_JWST_GP/F070W.dat').T
+F090L, F090F = numpy.loadtxt('../filters/NIRCAM_JWST_GP/F090W.dat').T
+F115L, F115F = numpy.loadtxt('../filters/NIRCAM_JWST_GP/F115W.dat').T
+F150L, F150F = numpy.loadtxt('../filters/NIRCAM_JWST_GP/F150W.dat').T
+F200L, F200F = numpy.loadtxt('../filters/NIRCAM_JWST_GP/F200W.dat').T
+F277L, F277F = numpy.loadtxt('../filters/NIRCAM_JWST_GP/F277W.dat').T
+F356L, F356F = numpy.loadtxt('../filters/NIRCAM_JWST_GP/F356W.dat').T
+F444L, F444F = numpy.loadtxt('../filters/NIRCAM_JWST_GP/F444W.dat').T
+
+jwst_gp=h5f.create_group('JWST_NIRCAM_GP')
+F070=jwst_gp.create_dataset('Nircam-F070',data=[F070L,F070F])
+F090=jwst_gp.create_dataset('Nircam-F090',data=[F090L,F090F])
+F115=jwst_gp.create_dataset('Nircam-F115',data=[F115L,F115F])
+F200=jwst_gp.create_dataset('Nircam-F200',data=[F200L,F200F])
+F277=jwst_gp.create_dataset('Nircam-F277',data=[F277L,F277F])
+F356=jwst_gp.create_dataset('Nircam-F356',data=[F356L,F356F])
+F444=jwst_gp.create_dataset('Nircam-F444',data=[F444L,F444F])
+
+for i in jwst_gp:
+	print (i)
+	k+=1
+
+###WISE filters
+W1L, W1F = numpy.loadtxt('../filters/WISE/W1.txt').T
+W2L, W2F = numpy.loadtxt('../filters/WISE/W2.txt').T
+W3L, W3F = numpy.loadtxt('../filters/WISE/W3.txt').T
+W4L, W4F = numpy.loadtxt('../filters/WISE/W4.txt').T
+
+
+wise=h5f.create_group('WISE')
+W1=wise.create_dataset('Wise1',data=[W1L,W1F])
+W2=wise.create_dataset('Wise2',data=[W2L,W2F])
+W3=wise.create_dataset('Wise3',data=[W3L,W3F])
+W4=wise.create_dataset('Wise4',data=[W4L,W4F])
+for i in wise:
+    print (i)
+    k+=1
+
+
+
+print (k)
+h5f.close()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
