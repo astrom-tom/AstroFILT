@@ -21,9 +21,12 @@ of filter and plot the selected one
 
 ####Python libraries
 import warnings
-warnings.simplefilter(action='ignore', category=FutureWarning)
-import h5py,random
 import os
+warnings.simplefilter(action='ignore', category=FutureWarning)
+import random
+
+###thrid party library
+import h5py
 import matplotlib
 import matplotlib.pyplot as plt
 from matplotlib import rc
@@ -67,7 +70,7 @@ if system in Instrument:
             wT.append(j)
             TT.append(jj) 
 
-        aa.plot(wave,Tr,color=colors[k],label='$%s$'%i)
+        aa.plot(wave,Tr,color=random.choice(colors),label='$%s$'%i)
         k+=1
 
     handles, labels = aa.get_legend_handles_labels()
