@@ -681,6 +681,35 @@ for i in wise:
     print (i)
     k+=1
 
+###CSP filters
+#SOURCE: https://csp.obs.carnegiescience.edu/data/filters
+uCSPw, uCSPf = numpy.loadtxt('../filters/CSP/u_CSP.dat').T
+gCSPw, gCSPf = numpy.loadtxt('../filters/CSP/g_CSP.dat').T
+rCSPw, rCSPf = numpy.loadtxt('../filters/CSP/r_CSP.dat').T
+iCSPw, iCSPf = numpy.loadtxt('../filters/CSP/i_CSP.dat').T
+BCSPw, BCSPf = numpy.loadtxt('../filters/CSP/B_CSP.dat').T
+VCSPw, VCSPf = numpy.loadtxt('../filters/CSP/V_LC3009.dat').T
+Ydupw, Ydupf = numpy.loadtxt('../filters/CSP/Y_DUPONT_W.dat').T
+Jdupw, Jdupf = numpy.loadtxt('../filters/CSP/J_DUPONT_W.dat').T
+Hdupw, Hdupf = numpy.loadtxt('../filters/CSP/H_DUPONT_W.dat').T
+
+
+csp=h5f.create_group('CSP')
+CSPu=csp.create_dataset('u-CSP',data=[uCSPw,uCSPf])
+CSPg=csp.create_dataset('g-CSP',data=[gCSPw,gCSPf])
+CSPr=csp.create_dataset('r-CSP',data=[rCSPw,rCSPf])
+CSPi=csp.create_dataset('i-CSP',data=[iCSPw,iCSPf])
+CSPB=csp.create_dataset('B-CSP',data=[BCSPw,BCSPf])
+CSPV=csp.create_dataset('V-3009CSP',data=[VCSPw,VCSPf])
+CSPY=csp.create_dataset('Y-dupont',data=[Ydupw,Ydupf])
+CSPJ=csp.create_dataset('J-dupont',data=[Jdupw,Jdupf])
+CSPH=csp.create_dataset('H-dupont',data=[Hdupw,Hdupf])
+
+
+for i in csp:
+    print (i)
+    k+=1
+
 
 
 print (k)
