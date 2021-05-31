@@ -710,9 +710,20 @@ for i in csp:
     print (i)
     k+=1
 
+##box filters homemade
+box1w, box1f = numpy.loadtxt('../filters/boxes/box_4000_4500.ascii').T
+box2w, box2f = numpy.loadtxt('../filters/boxes/box_8000_8500.ascii').T
+box3w, box3f = numpy.loadtxt('../filters/boxes/box_6000_6500.ascii').T
+box4w, box4f = numpy.loadtxt('../filters/boxes/box_7100_7600.ascii').T
+box5w, box5f = numpy.loadtxt('../filters/boxes/box_8500_9000.ascii').T
 
+boxes=h5f.create_group('boxes')
+box1=boxes.create_dataset('box_4000_4500',data=[box1w,box1f])
+box2=boxes.create_dataset('box_8000_8500',data=[box2w,box2f])
+box3=boxes.create_dataset('box_6000_6500',data=[box3w,box3f])
+box4=boxes.create_dataset('box_7100_7600',data=[box4w,box4f])
+box5=boxes.create_dataset('box_8500_9000',data=[box5w,box5f])
 
-print (k)
 h5f.close()
 
 
