@@ -323,20 +323,44 @@ for i in jon:
 
 
 #####megacam
-umegs,umegf=numpy.loadtxt('../filters/MEGACAM/up.pb').T
-gmegs,gmegf=numpy.loadtxt('../filters/MEGACAM/gp.pb').T
-rmegs,rmegf=numpy.loadtxt('../filters/MEGACAM/rp.pb').T
-imegs,imegf=numpy.loadtxt('../filters/MEGACAM/ip.pb').T
-zmegs,zmegf=numpy.loadtxt('../filters/MEGACAM/zp.pb').T
+ulastmegs,ulastmegf=numpy.loadtxt('../filters/MEGACAM/CFHT_MegaCam.u_1.dat').T
+u1stmegs,u1stmegf=numpy.loadtxt('../filters/MEGACAM/CFHT_MegaCam.u.dat').T
+
+glastmegs,glastmegf=numpy.loadtxt('../filters/MEGACAM/CFHT_MegaCam.g.dat').T
+g1stmegs,g1stmegf=numpy.loadtxt('../filters/MEGACAM/CFHT_MegaCam.g_1.dat').T
+
+rlastmegs,rlastmegf=numpy.loadtxt('../filters/MEGACAM/CFHT_MegaCam.r.dat').T
+r1stmegs,r1stmegf=numpy.loadtxt('../filters/MEGACAM/CFHT_MegaCam.r_1.dat').T
+
+ilastmegs,ilastmegf=numpy.loadtxt('../filters/MEGACAM/CFHT_MegaCam.i.dat').T
+i2ndmegs,i2ndmegf=numpy.loadtxt('../filters/MEGACAM/CFHT_MegaCam.i_2.dat').T
+i1stmegs,i1stmegf=numpy.loadtxt('../filters/MEGACAM/CFHT_MegaCam.i_1.dat').T
+
+zlastmegs,zlastmegf=numpy.loadtxt('../filters/MEGACAM/CFHT_MegaCam.z.dat').T
+z1stmegs,z1stmegf=numpy.loadtxt('../filters/MEGACAM/CFHT_MegaCam.z_1.dat').T
+
 megacam=h5f.create_group('megacam')
-umeg=megacam.create_dataset('u-megacam',data=[umegs,umegf])
-gmeg=megacam.create_dataset('g-megacam',data=[gmegs,gmegf])
-rmeg=megacam.create_dataset('r-megacam',data=[rmegs,rmegf])
-imeg=megacam.create_dataset('i-megacam',data=[imegs,imegf])
-zmeg=megacam.create_dataset('z-megacam',data=[zmegs,zmegf])
+u_last_meg=megacam.create_dataset('u-lastgen_megacam',data=[ulastmegs,ulastmegf])
+u_1st_meg=megacam.create_dataset('u-1stgen_megacam',data=[u1stmegs,u1stmegf])
+
+g_last_meg=megacam.create_dataset('g-lastgen_megacam',data=[glastmegs,glastmegf])
+g_1st_meg=megacam.create_dataset('g-1stgen_megacam',data=[g1stmegs,g1stmegf])
+
+r_last_meg=megacam.create_dataset('r_lastgen_megacam',data=[rlastmegs,rlastmegf])
+r_1st_meg=megacam.create_dataset('r_1stgen_megacam',data=[r1stmegs,r1stmegf])
+
+i_last_meg=megacam.create_dataset('i-lastgen_megacam',data=[ilastmegs,ilastmegf])
+i_2nd_meg=megacam.create_dataset('i-2nd_megacam',data=[i2ndmegs,i2ndmegf])
+i_1st_meg=megacam.create_dataset('i-1stgen_megacam',data=[i1stmegs,i1stmegf])
+
+z_last_meg=megacam.create_dataset('z_lastgen_megacam',data=[zlastmegs,zlastmegf])
+z_1st_meg=megacam.create_dataset('z_1stgen_megacam',data=[z1stmegs,z1stmegf])
+
 for i in megacam:
 	print (i)
 	k+=1
+
+
 
 
 ##MOSAIC
@@ -610,10 +634,12 @@ for i in wfpc2:
 	k+=1
 
 ####WIRCAM
-JWIRL,JWIRF=numpy.loadtxt('../filters/Wircam/J_WIRCAM.res').T
-HWIRL,HWIRF=numpy.loadtxt('../filters/Wircam/H_WIRCAM.res').T
-KWIRL,KWIRF=numpy.loadtxt('../filters/Wircam/K_WIRCAM.res').T
+YWIRL,YWIRF=numpy.loadtxt('../filters/Wircam/CFHT_Wircam.Y.dat').T
+JWIRL,JWIRF=numpy.loadtxt('../filters/Wircam/CFHT_Wircam.J.dat').T
+HWIRL,HWIRF=numpy.loadtxt('../filters/Wircam/CFHT_Wircam.H.dat').T
+KWIRL,KWIRF=numpy.loadtxt('../filters/Wircam/CFHT_Wircam.Ks.dat').T
 wircam=h5f.create_group('wircam')
+Ywircam=wircam.create_dataset('Y-wircam',data=[YWIRL,YWIRF])
 Jwircam=wircam.create_dataset('J-wircam',data=[JWIRL,JWIRF])
 Hwircam=wircam.create_dataset('H-wircam',data=[HWIRL,HWIRF])
 Kwircam=wircam.create_dataset('K-wircam',data=[KWIRL,KWIRF])
@@ -666,10 +692,10 @@ for i in jwst_gp:
 	k+=1
 
 ###WISE filters
-W1L, W1F = numpy.loadtxt('../filters/WISE/W1.txt').T
-W2L, W2F = numpy.loadtxt('../filters/WISE/W2.txt').T
-W3L, W3F = numpy.loadtxt('../filters/WISE/W3.txt').T
-W4L, W4F = numpy.loadtxt('../filters/WISE/W4.txt').T
+W1L, W1F = numpy.loadtxt('../filters/WISE/WISE_1.dat').T
+W2L, W2F = numpy.loadtxt('../filters/WISE/WISE_2.dat').T
+W3L, W3F = numpy.loadtxt('../filters/WISE/WISE_3.dat').T
+W4L, W4F = numpy.loadtxt('../filters/WISE/WISE_4.dat').T
 
 
 wise=h5f.create_group('WISE')
@@ -693,7 +719,6 @@ Ydupw, Ydupf = numpy.loadtxt('../filters/CSP/Y_DUPONT_W.dat').T
 Jdupw, Jdupf = numpy.loadtxt('../filters/CSP/J_DUPONT_W.dat').T
 Hdupw, Hdupf = numpy.loadtxt('../filters/CSP/H_DUPONT_W.dat').T
 
-
 csp=h5f.create_group('CSP')
 CSPu=csp.create_dataset('u-CSP',data=[uCSPw,uCSPf])
 CSPg=csp.create_dataset('g-CSP',data=[gCSPw,gCSPf])
@@ -704,7 +729,6 @@ CSPV=csp.create_dataset('V-3009CSP',data=[VCSPw,VCSPf])
 CSPY=csp.create_dataset('Y-dupont',data=[Ydupw,Ydupf])
 CSPJ=csp.create_dataset('J-dupont',data=[Jdupw,Jdupf])
 CSPH=csp.create_dataset('H-dupont',data=[Hdupw,Hdupf])
-
 
 for i in csp:
     print (i)
@@ -723,6 +747,22 @@ box2=boxes.create_dataset('box_8000_8500',data=[box2w,box2f])
 box3=boxes.create_dataset('box_6000_6500',data=[box3w,box3f])
 box4=boxes.create_dataset('box_7100_7600',data=[box4w,box4f])
 box5=boxes.create_dataset('box_8500_9000',data=[box5w,box5f])
+
+##CFH12k
+Bw, Bf = numpy.loadtxt('../filters/CFH12k/CFH12k_B.dat').T
+Vw, Vf = numpy.loadtxt('../filters/CFH12k/CFH12k_V.dat').T
+Rw, Rf = numpy.loadtxt('../filters/CFH12k/CFH12k_R.dat').T
+Iw, If = numpy.loadtxt('../filters/CFH12k/CFH12k_I.dat').T
+
+cfh12k=h5f.create_group('CFH12k')
+cfh12k_B=cfh12k.create_dataset('CFH12k_B',data=[Bw,Bf])
+cfh12k_V=cfh12k.create_dataset('CFH12k_V',data=[Vw,Vf])
+cfh12k_R=cfh12k.create_dataset('CFH12k_R',data=[Rw,Rf])
+cfh12k_I=cfh12k.create_dataset('CFH12k_I',data=[Iw,If])
+
+for i in cfh12k:
+    print(i)
+    k+=1
 
 h5f.close()
 
